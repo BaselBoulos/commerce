@@ -58,7 +58,13 @@
             </div>
 
         </nav>
-
+        {% if messages %}
+        <div class="alert alert-{{ message.tags }}">
+            {% for message in messages %}
+               {{message|safe}}
+             {% endfor %}
+        </div>
+    {% endif %}
 
 
         {% block body %}

@@ -80,7 +80,8 @@ def new_listing(request):
     if request.method == "POST":
         listingform = AuctionListingForm(request.POST)
         if listingform.is_valid():
-            listingform = listingform.save()
+            listingform = listingform.save(commit=False)
+            listingform.current_price = listingform.start_bid
             listingform.seller = request.user.username
             listingform.save()
             return HttpResponseRedirect(reverse('index'))
@@ -94,13 +95,13 @@ def add_to_wishlist(request, product_id):
     product = WishList.objects.filter(listing_id=product_id, user=request.user.username)
     if product:
         product.delete()
-        messages.success(request, "Removed From ")
+        messages.success(request, "Removed From Watchlist")
     else:
         product = WishList()
         product.listing_id = product_id
         product.user = request.user.username
         product.save()
-        messages.success(request, "Added To ")
+        messages.success(request, "Added To Watchlist")
     return HttpResponseRedirect(request.META['HTTP_REFERER'])
 
 
@@ -119,6 +120,7 @@ class DetailView(generic.DetailView):
     model = AuctionListing
     context_object_name = 'listing'
     template_name = "auctions/listing_details.html"
+
 
 
 class ListingDelete(generic.DeleteView):
@@ -148,6 +150,7 @@ def new_comment(request, product_id):
 @login_required(login_url="login")
 def new_bid(request, product_id):
     product = AuctionListing.objects.get(id=product_id)
+    last_price = product.current_price
     bidform = BidForm
     if request.method == "GET":
         request.session['login_from'] = request.META.get('HTTP_REFERER', '/')
@@ -155,10 +158,26 @@ def new_bid(request, product_id):
         bidform = BidForm(request.POST)
         if bidform.is_valid():
             bidform = bidform.save(commit=False)
+            if bidform.price >= product.start_bid and bidform.price > last_price:
+                last_price = bidform.price
+                product.current_price = last_price
+                product.save()
+            else:
+                messages.error(request, "Bid needs to be higher than the current price")
+                return HttpResponseRedirect(request.META['HTTP_REFERER'])
             bidform.listing = product
             bidform.user = request.user
             bidform.save()
+            messages.success(request, "Bid successful")
             return HttpResponseRedirect(request.session['login_from'])
     return render(request, "auctions/new_bid.html", {
         "bidform": bidform,
+    })
+
+
+@login_required(login_url="login")
+def view_bids(request, product_id):
+    product = AuctionListing.objects.get(id=product_id)
+    return render(request, "auctions/view_bids.html", {
+        'product': product
     })

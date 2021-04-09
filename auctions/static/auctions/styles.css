@@ -16,3 +16,15 @@ body {
 		transition: box-shadow 0.5s;
 
 		}
+
+.column {
+  float: left;
+  width: 33.33%;
+  padding: 1px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}

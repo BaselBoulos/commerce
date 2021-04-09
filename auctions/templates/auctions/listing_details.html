@@ -1,26 +1,21 @@
 {% extends "auctions/layout.html" %}
 
-{% block title %} {{listing.title}}{% endblock %}
+{% block title %} {{listing.title}} {% endblock %}
 
 {% block body %}
 
 <div class="container">
-    {% if messages %}
-        <div class="alert alert-{{ message.tags }}">
-            {% for message in messages%}
-               {{message|safe}} - <a href="{% url 'wishlist' %}" class="alert-link">WishList</a>
-             {% endfor %}
-        </div>
-    {% endif %}
+
     <div class="row">
-        <div class="col-md-5">
-            <span class="thumbnail text-center">
+        <div class="col-md-4">
+            <div class="thumbnail text-center">
       			<img src="{{listing.image}}">
-      			<h4 class="text-danger">{{listing.title}}</h4>
+                <h4 class="text-danger">{{listing.title}}</h4>
                 <p>{{listing.description}}</p>
                 <p>Seller: <strong>{{listing.seller}}</strong></p>
-                <p>Category: {{listing.category}}</p>
-                <p>{{listing.start_bid}}$</p>
+                <p>Category: <strong>{{listing.category}}</strong></p>
+                <p>Starting price: <strong>{{listing.start_bid}}$</strong></p>
+                <p>Current price: <strong>{{listing.current_price}}$</strong> <a href="{% url 'view_bids' listing.id %}"> [ Bids ] </a> </p>
                 <hr class="line">
                 <div class="row">
                         <div class="col-md-6 col-sm-6">
@@ -28,16 +23,17 @@
                                  <button type="button" class="btn btn-primary" onclick="btn btn-danger">Add To Wishlist</button>
                             </a>
                         </div>
-                    <div class="col-md-6 col-sm-6">
-                        <a href="{% url 'new_bid' listing.id %}">
-      					<button class="btn btn-danger right" >BID NOW</button>
-                        </a>
-      				</div>
+
+                        <div class="col-md-6 col-sm-6">
+                            <a href="{% url 'new_bid' listing.id %}">
+                            <button class="btn btn-danger right" >BID NOW</button>
+                            </a>
+                        </div>
                 </div>
-            </span>
+            </div>
         </div>
         <div class="col-md-5">
-            <span class="thumbnail text-center">
+            <div class="thumbnail text-center">
                 <h4>Comments:</h4>
                 {% if not listing.listing_comments.all %}
                     <a href="{% url 'new_comment' listing.id %}">Add a comment</a
@@ -54,6 +50,7 @@
                         <br>
                     {% endfor %}
                 {% endif %}
-            </span>
+            </div>
         </div>
+
 {% endblock %}
