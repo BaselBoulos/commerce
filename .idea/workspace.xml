@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9c0c900c-6750-4d24-a540-2132a27a59c6" name="Default Changelist" comment="First bidding system update:&#10;Added a Bid model, form, HTML page, views.py function">
-      <change afterPath="$PROJECT_DIR$/auctions/migrations/0007_bid.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/migrations/0008_auto_20210409_1140.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/migrations/0009_auto_20210409_1419.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/migrations/0010_auctionlisting_current_price.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/templates/auctions/new_bid.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/templates/auctions/new_comment.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/auctions/templates/auctions/view_bids.html" afterDir="false" />
+    <list default="true" id="9c0c900c-6750-4d24-a540-2132a27a59c6" name="Default Changelist" comment="Updates in Bid system, in addition to Bid history for each listing">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/models.py" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/models.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/static/auctions/styles.css" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/static/auctions/styles.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/layout.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/layout.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/listing_details.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/listing_details.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/new_bid.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/new_bid.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/new_comment.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/new_comment.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/new_listing.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/new_listing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/view_bids.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/view_bids.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/auctions/templates/auctions/wishlist.html" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/templates/auctions/wishlist.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/urls.py" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/urls.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/auctions/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/auctions/views.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/db.sqlite3" beforeDir="false" afterPath="$PROJECT_DIR$/db.sqlite3" afterDir="false" />
@@ -62,7 +59,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="TODO_SCOPE" value="All Places" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/Programming Projects/wiki" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="configurable.group.language" />
   </component>
   <component name="RecentsManager">
@@ -142,7 +139,14 @@
       <option name="project" value="LOCAL" />
       <updated>1617872561855</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Updates in Bid system, in addition to Bid history for each listing">
+      <created>1617944105319</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1617944105319</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -181,6 +185,7 @@
     <MESSAGE value="Added New model for comments," />
     <MESSAGE value="Added comment forms and section in each active listing, Next step is to redirect to the same listing after adding a comment, and add in url the full active listing url with /comment at the end" />
     <MESSAGE value="First bidding system update:&#10;Added a Bid model, form, HTML page, views.py function" />
-    <option name="LAST_COMMIT_MESSAGE" value="First bidding system update:&#10;Added a Bid model, form, HTML page, views.py function" />
+    <MESSAGE value="Updates in Bid system, in addition to Bid history for each listing" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updates in Bid system, in addition to Bid history for each listing" />
   </component>
 </project>

@@ -122,7 +122,6 @@ class DetailView(generic.DetailView):
     template_name = "auctions/listing_details.html"
 
 
-
 class ListingDelete(generic.DeleteView):
     model = AuctionListing
     success_url = reverse_lazy('index')
@@ -150,6 +149,9 @@ def new_comment(request, product_id):
 @login_required(login_url="login")
 def new_bid(request, product_id):
     product = AuctionListing.objects.get(id=product_id)
+    if product.is_closed:
+        messages.error(request, "Cannot bid on this item the auction is closed")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])
     last_price = product.current_price
     bidform = BidForm
     if request.method == "GET":
@@ -179,5 +181,18 @@ def new_bid(request, product_id):
 def view_bids(request, product_id):
     product = AuctionListing.objects.get(id=product_id)
     return render(request, "auctions/view_bids.html", {
-        'product': product
+        'product': product,
     })
+
+
+@login_required(login_url="login")
+def close_auction(request, product_id):
+    product = AuctionListing.objects.get(id=product_id)
+    if request.user.username == product.seller:
+        if request.method == "POST":
+            product.is_closed = True
+            product.save()
+            return HttpResponseRedirect(reverse('index'))
+    else:
+        messages.error(request, "You are not the owner of this listing")
+        return HttpResponseRedirect(request.META['HTTP_REFERER'])

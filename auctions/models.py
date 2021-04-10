@@ -14,6 +14,8 @@ class AuctionListing(models.Model):
     image = models.CharField(max_length=1000, blank=True)
     category = models.CharField(max_length=100)
     seller = models.CharField(max_length=100, default="Default_Value")
+    is_closed = models.BooleanField(default=False)
+    winner = models.CharField(max_length=100, default="Default_Value")
 
     def __str__(self):
         return f"{self.title} listing | {self.seller}"

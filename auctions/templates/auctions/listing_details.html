@@ -4,53 +4,78 @@
 
 {% block body %}
 
-<div class="container">
-
-    <div class="row">
-        <div class="col-md-4">
-            <div class="thumbnail text-center">
-      			<img src="{{listing.image}}">
-                <h4 class="text-danger">{{listing.title}}</h4>
-                <p>{{listing.description}}</p>
-                <p>Seller: <strong>{{listing.seller}}</strong></p>
-                <p>Category: <strong>{{listing.category}}</strong></p>
-                <p>Starting price: <strong>{{listing.start_bid}}$</strong></p>
-                <p>Current price: <strong>{{listing.current_price}}$</strong> <a href="{% url 'view_bids' listing.id %}"> [ Bids ] </a> </p>
-                <hr class="line">
+<div class="container-fluid details-container">
+    <div class="row display-flex">
+        <div class="col-md-12 text-center">
+            <div class="thumbnail">
+                <img src="{{ listing.image }}" class="img-responsive" >
+                <div class="details-caption">
+                    <h4>{{listing.title}}</h4>
+                    <p>{{listing.description}}</p>
+                    <p>Seller: <strong>{{listing.seller}}</strong></p>
+                    <p>Category: <strong>{{listing.category}}</strong></p>
+                    <p>Starting price: <strong>{{listing.start_bid}}$</strong></p>
+                    {% if listing.is_closed %}
+                    <p>Auction is closed for {{listing.current_price}}$</p>
+                            {% if user.get_username == listing.winner %}
+                                <p>Congratulations {{user.get_username}}</p>
+                            {% endif %}
+                    {% else %}
+                    <p>Current price: <strong>{{listing.current_price}}$</strong>
+                    {% endif %}
+                        <a href="{% url 'view_bids' listing.id %}">
+                            {% if listing.listing_bids.all.count == 1 %}
+                                [ {{listing.listing_bids.all.count}} Bid ]
+                            {% else %}
+                                [ {{listing.listing_bids.all.count}} Bids ]
+                            {% endif %}
+                        </a>
+                    </p>
+                    <hr class="line">
+                </div>
                 <div class="row">
-                        <div class="col-md-6 col-sm-6">
-                            <a href="{% url 'add_to_wishlist' listing.id %}">
-                                 <button type="button" class="btn btn-primary" onclick="btn btn-danger">Add To Wishlist</button>
-                            </a>
-                        </div>
-
-                        <div class="col-md-6 col-sm-6">
-                            <a href="{% url 'new_bid' listing.id %}">
+                    <div class="col-md-4">
+                        <a href="{% url 'add_to_wishlist' listing.id %}">
+                             <button type="button" class="btn btn-primary" onclick="btn btn-danger">Add To Wishlist</button>
+                        </a>
+                    </div>
+                    <div class="col-md-4">
+                        <form action="{% url 'close_auction' listing.id %}" method="post">
+                                {% csrf_token %}
+                                <div class="form-group">
+                                    <input class="btn btn-danger" id="close_bid_button" type="submit" value="Close Auction">
+                                </div>
+                        </form>
+                    </div>
+                    <div class="col-md-4">
+                        <a href="{% url 'new_bid' listing.id %}">
                             <button class="btn btn-danger right" >BID NOW</button>
-                            </a>
-                        </div>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
-        <div class="col-md-5">
-            <div class="thumbnail text-center">
-                <h4>Comments:</h4>
-                {% if not listing.listing_comments.all %}
-                    <a href="{% url 'new_comment' listing.id %}">Add a comment</a
-                {% else %}
-                    <a href="{% url 'new_comment' listing.id %}">Add a comment</a>
-                    <br>
-                    {% for comment in listing.listing_comments.all %}
-                        <strong>
-                            {{comment.user}} -
-                            {{comment.date_added}}
-                        </strong>
-                        <br>
-                        {{comment.body}}
-                        <br>
-                    {% endfor %}
-                {% endif %}
-            </div>
-        </div>
+    </div>
+</div>
 
+<div class="col-md-12">
+    <div class="thumbnail text-center">
+        <h4>Comments:</h4>
+        {% if not listing.listing_comments.all %}
+            <a href="{% url 'new_comment' listing.id %}">Add a comment</a>
+        {% else %}
+            <a href="{% url 'new_comment' listing.id %}">Add a comment</a>
+            <br>
+        {% for comment in listing.listing_comments.all %}
+            <strong>
+                {{comment.user}} -
+                {{comment.date_added}}
+            </strong>
+            <br>
+                {{comment.body}}
+            <br>
+        {% endfor %}
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
